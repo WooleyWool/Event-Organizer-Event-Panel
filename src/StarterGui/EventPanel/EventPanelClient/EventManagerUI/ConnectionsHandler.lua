@@ -69,7 +69,7 @@ local ConnectionsList = {
 					month = tonumber(TextBoxFolder.MonthStartTextBox.Text),
 					day = tonumber(TextBoxFolder.DayStartTextBox.Text),
 					hour = tonumber(TextBoxFolder.HourEndTextBox.Text) - 1,
-					min = (tonumber(TextBoxFolder.MinuteStartTextBox.Text) - tonumber(TextBoxFolder.MinuteJoinTimeTextBox.Text))
+					min = (tonumber(TextBoxFolder.MinuteStartTextBox.Text) - tonumber(TextBoxFolder.MinuteJoinTimeTextBox.Text * 60))
 				}	
 				
 				AttendeeJoinEarlyTime = os.time(AttendeeJoinTimeTable)
