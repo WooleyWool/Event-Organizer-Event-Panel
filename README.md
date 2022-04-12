@@ -1,1 +1,1 @@
-# Event-Organizer---Event-Panel
+# Event-Organizer-Event-Panel
