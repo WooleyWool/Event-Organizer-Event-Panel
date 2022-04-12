@@ -5,6 +5,7 @@ local MaxCharacters = 250
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local EventsFolder = ReplicatedStorage:WaitForChild("EventPanel"):WaitForChild("Events")
 
+-- Sets up the QA question submit frame
 function module.SetupQA(QAFrame: Frame, EventName)
 	local QADraftTextBox: TextBox = QAFrame.QADraftTextBox
 	local CharactersLeftText: TextLabel = QAFrame.CharactersLeftText

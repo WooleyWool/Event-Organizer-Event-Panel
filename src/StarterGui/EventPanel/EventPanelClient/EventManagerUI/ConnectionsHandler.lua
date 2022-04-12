@@ -6,6 +6,7 @@ local EventPanelFolder = ReplicatedStorage:WaitForChild("EventPanel")
 
 local OpenedCurrentEventData = require(script.Parent.OpenedCurrentEventData)
 
+-- All the button connections that are initially set up based on the button's name
 local ConnectionsList = {
 	["EventManageBtn"] = function(EventPanel)
 		EventPanel.Visible = not EventPanel.Visible
@@ -287,14 +288,7 @@ local ConnectionsList = {
 	end,
 }
 
-function module.SetupConnection(ConnectionName, UIElement)	
-	if ConnectionName == "EventManageBtn" then
-		UIElement.Parent.EventManageBtn.MouseButton1Click:Connect(function()
-			ConnectionsList[ConnectionName](UIElement)
-		end)
-	end 
-end
-
+-- Setup the button connection by calling the function in ConnectionsList
 function module.SetupBtnConnection(Button: TextButton, Frame)
 	if ConnectionsList[Button.Name] then
 		Button.MouseButton1Click:Connect(function()

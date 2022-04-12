@@ -18,6 +18,7 @@ local EventPanel
 
 local ButtonConnections = {}
 
+-- When pressing the event icon, it will setup the UI based on the data associated with it. If it's already open, will update data too.
 function SetupEventUIView(EventName)
 	local EventFrame = EventPanel.EventFrame
 	local RespectiveEventData = ClientEventData[EventName]
@@ -113,6 +114,7 @@ function UpdateEvents(NewEventsData, EventPanel)
 	ClientEventData = NewEventsData
 end
 
+-- Initial setup of connections with remote events
 function module.SetupClientEvents(EventData, SentEventPanel)
 	ClientEventData = EventData
 	

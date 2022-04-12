@@ -17,6 +17,7 @@ function SetData(EventPanel, EventSystemsData)
 	EventPanel.PinnedMessage.PinnedTextLabel.Text = EventSystemsData["PinnedMessage"]
 end
 
+-- Sets up the QA button. If QAEnabled == false, the frame connot be accessed
 function module.SetupReceivedData(ReceivedData, EventPanel: Frame)
 	EventSystemsData = ReceivedData
 	

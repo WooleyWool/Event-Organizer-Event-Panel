@@ -13,6 +13,7 @@ local EventSystemData = {
 }
 
 function module.InitializeEventSystem()
+	-- Anything that is not a string will be edited after being fired. QAEnabled will be edited here.
 	Events.ServerUpdateEventSystemData.OnServerEvent:Connect(function(player, Index, NewValue)
 		local EventManager = AttendeeHandler.CheckPlayerRole(player, EventPanelVIPList.ReturnData())
 		
@@ -25,6 +26,7 @@ function module.InitializeEventSystem()
 		Events.ClientUpdateEventSystemData:FireAllClients(EventSystemData)
 	end)
 	
+	-- Pinned messages will be filtered first then will be updated among all clients
 	Events.ServerUpdatePinnedMessage.OnServerEvent:Connect(function(player, PinnedMessage)
 		local EventManager = AttendeeHandler.CheckPlayerRole(player, EventPanelVIPList.ReturnData())
 

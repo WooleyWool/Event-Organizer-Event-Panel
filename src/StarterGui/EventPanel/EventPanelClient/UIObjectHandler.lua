@@ -6,14 +6,13 @@ local EventsFolder = ReplicatedStorage:WaitForChild("EventPanel"):WaitForChild("
 
 local camera = game.Workspace.Camera
 
---local ScreenGui = script.Parent.Parent.Parent:WaitForChild("EventManager")
-
 local RatioX, RatioY = camera.ViewportSize.X / 1239, camera.ViewportSize.Y / 730
 
 local ButtonGrowthFactor = 1.1
 
 local MouseHoverTweenInfo = TweenInfo.new(.1, Enum.EasingStyle.Linear, Enum.EasingDirection.In)
 
+-- Sets up infinite scrolling based on the number of elements in the scrolling frame
 function module.SetupInfiniteScrolling(ScrollingFrame: ScrollingFrame)
 	if ScrollingFrame:FindFirstChildOfClass("UIListLayout") or ScrollingFrame:FindFirstChildOfClass("UIGridLayout") then
 		local UIGridLayout = ScrollingFrame:FindFirstChildOfClass("UIGridLayout")
@@ -32,6 +31,7 @@ function module.SetupInfiniteScrolling(ScrollingFrame: ScrollingFrame)
 	end
 end
 
+-- Sets up mouse hovering with UI buttons
 function module.SetupHovering(Button)
 	local CurrentSizeX, CurrentSizeY = Button.Size.X.Scale, Button.Size.Y.Scale
 
@@ -95,6 +95,7 @@ function module.BrighterColorHover(Button)
 	end)
 end
 
+-- Sets up search system regarding the speific scrolling frame
 function module.SetupSearchSystem(SearchTextBox: TextBox)
 	local ScrollingFrame = SearchTextBox.Parent:FindFirstChildOfClass("ScrollingFrame") or SearchTextBox.Parent
 	
@@ -113,6 +114,7 @@ function module.SetupSearchSystem(SearchTextBox: TextBox)
 	end
 end
 
+-- Updates current edited slide or entered ID
 function module.SetupSlideTextboxIDUpdater(TextBox: TextBox)
 	TextBox.FocusLost:Connect(function()
 		if tonumber(TextBox.Text) then

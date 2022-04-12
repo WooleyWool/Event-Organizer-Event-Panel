@@ -16,6 +16,7 @@ function SetupInfiniteScrolling(ScreenGui: ScreenGui)
 	end 
 end
 
+-- Initial setup with event manager UI
 function module.InitializeManagerUI(AssociatedScreenGui: ScreenGui, EventData)
 	ScreenGui = AssociatedScreenGui
 	local EventPanelUI = ScreenGui.EventPanel

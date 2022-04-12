@@ -29,6 +29,12 @@ function module.SetupSlideshowSystem()
 		error("Slideshow stage doesn't exist, slideshow handler not intitalized")
 	end	
 	
+	--[[
+		This will setup the presentation event on the screen
+		Start: Start off at Slide1 and present it on the PresentationModel
+		Next: Will move to the next slide
+		Previous: Will move to the previous slide
+	]]
 	EventsFolder.ServerSwitchSlide.OnServerEvent:Connect(function(player, CurrentEvent, Action)
 		local EventData = EventDataHandler.ReturnSpecificEvent(CurrentEvent)
 		
@@ -48,6 +54,8 @@ function module.SetupSlideshowSystem()
 					return
 				end
 
+				PresentationModel.PresentationScreen.SurfaceGui.QAQuestion.Text = ""
+
 				CurrentSlideNumber += 1
 
 				PresentationModel.PresentationScreen.SurfaceGui.SlideImage.Image = ReturnImageID(EventData["SlideshowSlides"]["Slide"..CurrentSlideNumber])
@@ -56,6 +64,8 @@ function module.SetupSlideshowSystem()
 					return
 				end
 
+				PresentationModel.PresentationScreen.SurfaceGui.QAQuestion.Text = ""
+
 				CurrentSlideNumber -= 1
 
 				PresentationModel.PresentationScreen.SurfaceGui.SlideImage.Image = ReturnImageID(EventData["SlideshowSlides"]["Slide"..CurrentSlideNumber])
@@ -63,6 +73,11 @@ function module.SetupSlideshowSystem()
 		end
 	end)
 	
+	--[[
+		New and Edit have the following Data:
+			SlideshowImageID: int
+			SlidePosition: number
+	]]
 	EventsFolder.ServerSlideshowAction.OnServerEvent:Connect(function(player, Action, EventName, SlideshowData)
 		if AttendeeHandler.CheckPlayerRole(player, AllowedPlayerList) then
 			if Action == "New" then
@@ -75,6 +90,11 @@ function module.SetupSlideshowSystem()
 		end
 	end)
 	
+	--[[
+		Hide: Hide the QA question on the PresentationModel
+		Present: Show the QA question on the PresentationModel
+	]]
+
 	EventsFolder.ServerQAAction.OnServerEvent:Connect(function(player, AttendeeName, CurrentEvent, Action)
 		if AttendeeHandler.CheckPlayerRole(player, AllowedPlayerList) then
 			local EventData = EventDataHandler.ReturnSpecificEvent(CurrentEvent)

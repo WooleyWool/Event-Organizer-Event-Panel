@@ -6,6 +6,7 @@ local UIAssets = script.Parent.UIAssets
 
 local OpenedCurrentEventData = require(script.Parent.OpenedCurrentEventData)
 
+-- Sets up the QA frame and button connections
 function module.SetupQA(QAScrollingFrame: ScrollingFrame, AttendeeName: string, Question: string)
 	local QASliderClone = UIAssets.QASlider:Clone()
 	QASliderClone.AttendeeName.Text = AttendeeName

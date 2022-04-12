@@ -23,6 +23,7 @@ local TextConstants = {
 	ServerLock = "This server is locked, new users are prevented from joining."
 }
 
+-- Initial check player role, add them to attended events (if any are running), and check to see if they are an event manager to which they'll receive their panel.
 function CheckPlayerRole(player: Player)
 	local EventData = EventDataHandler.ReturnEventData()
 	

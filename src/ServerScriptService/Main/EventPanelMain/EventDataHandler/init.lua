@@ -1,3 +1,4 @@
+---@diagnostic disable: empty-block
 local module = {}
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -7,7 +8,7 @@ local Players = game:GetService("Players")
 
 local ProfileService = require(script.ProfileService)
 
-local EventOrganizerID = 34355831
+local EventOrganizerID = 34355831 -- Put the main EO's ID
 
 local ProfileTemplate = {
 	GlobalBanList = {}
@@ -57,12 +58,13 @@ function module.SetupNewEventData(EventDataTable)
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Sets up the data for ProfileService
 function module.SetupData()
 	local profile = ProfileStore:LoadProfileAsync("Player_" .. EventOrganizerID)
 		
 	if profile ~= nil then
-		profile:AddUserId(EventOrganizerID) -- GDPR compliance
-		profile:Reconcile() -- Fill in missing variables from ProfileTemplate (optional)
+		profile:AddUserId(EventOrganizerID)
+		profile:Reconcile() -- Fill in missing variables from ProfileTemplate
 		
 		Profiles[EventOrganizerID] = profile
 	end
@@ -80,6 +82,7 @@ function module.SetupData()
 	ReplicatedStorage.EventPanel.Events.ClientUpdateEvents:FireAllClients(Profiles[EventOrganizerID].Data)
 end
 
+-- Removes the event and if there are any events after it in the dictionary, bump it down by 1
 function module.RemoveEvent(EventID: string)
 	local EventData = Profiles[EventOrganizerID].Data
 
@@ -104,6 +107,7 @@ function module.RemoveEvent(EventID: string)
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Update the global ban list by Ban and Unban (ing) the player
 function module.GlobalBanListUpdate(BanFunction, PlayerId)
 	local EventData = Profiles[EventOrganizerID].Data
 
@@ -118,6 +122,7 @@ function module.GlobalBanListUpdate(BanFunction, PlayerId)
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Update the event ban list by Ban and Unban (ing) the player
 function module.EventBanListUpdate(EventName, BanFunction, PlayerId)
 	local EventData = Profiles[EventOrganizerID].Data
 
@@ -132,6 +137,7 @@ function module.EventBanListUpdate(EventName, BanFunction, PlayerId)
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Add a new attendee to the AttendeeList. Index: AttendeeName, Value: AttendeeId
 function module.AddAttendee(EventName, AttendeeId: number, AttendeeName: string)
 	local EventData = Profiles[EventOrganizerID].Data
 
@@ -140,6 +146,7 @@ function module.AddAttendee(EventName, AttendeeId: number, AttendeeName: string)
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Add a QA question, all FilteredQuestion's will be filtered before being added in 
 function module.AddQAQuestion(EventName, Attendee: Player, FilteredQuestion: string)	
 	local EventData = Profiles[EventOrganizerID].Data
 	local EventQADirectory = EventData[EventName].QAList
@@ -155,6 +162,12 @@ function module.AddQAQuestion(EventName, Attendee: Player, FilteredQuestion: str
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Add a slide to the specified event
+--[[
+	SlideshowData:
+		SlideshowImageID: int
+		SlidePosition: number
+]]
 function module.AddSlideshow(EventName, SlideshowData)
 	local EventData = Profiles[EventOrganizerID].Data
 	local EventDirectory = EventData[EventName]
@@ -180,6 +193,7 @@ function module.AddSlideshow(EventName, SlideshowData)
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Remove a slide and if there are any other slides after it in the dictionary, bump down the slide position value by 1
 function module.DeleteSlide(EventName, SlideName)
 	local EventData = Profiles[EventOrganizerID].Data
 	local EventDirectory = EventData[EventName]
@@ -193,10 +207,28 @@ function module.DeleteSlide(EventName, SlideName)
 	end
 		
 	SlideshowDirectory[SlideName] = nil
+
+	local Position = tonumber(string.sub(SlideName, 6))
+	
+	for i, v in pairs(SlideshowDirectory) do
+		if tonumber(string.sub(i, 6)) > Position then
+			local OldPosition = tonumber(string.sub(i, 6))
+			local NewPos = OldPosition - 1
+			
+			SlideshowDirectory["Slide"..tostring(NewPos)] = v
+			SlideshowDirectory[i] = nil
+		end
+	end
 		
 	EventPanelFolder.Events.ClientUpdateEvents:FireAllClients(EventData)
 end
 
+-- Edit the slide from the specified event
+--[[
+	SlideshowData:
+		SlideshowImageID: int
+		SlidePosition: number
+]]
 function module.EditSlide(EventName, SlideshowData)
 	local EventData = Profiles[EventOrganizerID].Data
 	local EventDirectory = EventData[EventName]
@@ -218,6 +250,7 @@ function module.EditSlide(EventName, SlideshowData)
 	print(SlideshowDirectory)
 end
 
+-- Returns the entire event data
 function module.ReturnEventData()
 	repeat
 		task.wait(.01)
@@ -228,6 +261,7 @@ function module.ReturnEventData()
 	return EventData
 end
 
+-- Returns the specific event data
 function module.ReturnSpecificEvent(EventName)
 	return Profiles[EventOrganizerID].Data[EventName]
 end

@@ -6,6 +6,7 @@ local UIAssets = script.Parent.UIAssets
 
 local OpenedCurrentEventData = require(script.Parent.OpenedCurrentEventData)
 
+-- Specified button functions based on button name
 local AttendeeListFunctions = {
 	Kick = function(AttendeeId: number)
 		EventsFolder.ServerAttendeeAction:FireServer("Kick", AttendeeId, OpenedCurrentEventData.ReturnEventName())
@@ -24,6 +25,7 @@ local AttendeeListFunctions = {
 	end
 }
 
+-- Sets up the attendee frame with the respective user's username, id, event banned, and globally banned
 function module.SetupAttendeeList(AttendeeList: ScrollingFrame, AttendeeName: string, AttendeeId: number, EventBan: boolean, GlobalBan: boolean)
 	local AttendeeFrameClone = UIAssets.AttendeeSlider:Clone()
 	

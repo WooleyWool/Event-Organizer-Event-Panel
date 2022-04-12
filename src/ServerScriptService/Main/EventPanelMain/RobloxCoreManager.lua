@@ -16,6 +16,11 @@ local CoreFunctions = {
 }
 
 function module.SetupCoreFunction()
+	--[[
+		ServerLocking: Prevent new users from joining the server
+		ResetPrevent: Prevent users from resetting in-game
+		ChatPrevent: Prevent users from hatting (EventManagers can still chat)
+	]]
 	EventsFolder.ServerUpdateCoreFunction.OnServerEvent:Connect(function(player, CoreFunction, Value)
 		local EventManager = AttendeeHandler.CheckPlayerRole(player, AllowedPlayerList)
 		

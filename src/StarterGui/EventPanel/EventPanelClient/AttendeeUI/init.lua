@@ -7,6 +7,7 @@ local ConnectionsHandler = require(script.ConnectionsHandler)
 local EventSystemHandler = require(script.EventSystemsHandler)
 local QAHandler = require(script.QAHandler)
 
+-- Initial setup for AttendeeUI
 function module.Initialize(AssociatedScreenGui: ScreenGui, EventName, EventSystemData)
 	ScreenGui = AssociatedScreenGui
 	local EventPanelUI = ScreenGui.EventPanel

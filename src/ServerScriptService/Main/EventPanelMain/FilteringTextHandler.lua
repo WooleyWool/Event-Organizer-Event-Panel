@@ -2,6 +2,7 @@ local module = {}
 
 local TextService = game:GetService("TextService")
 
+-- Filter the text that is sent and will return the filtered string
 function module.FilterText(Text: string, UserId: number)
 	local FilteredStringResult
 	local success, errorMsg = pcall(function()

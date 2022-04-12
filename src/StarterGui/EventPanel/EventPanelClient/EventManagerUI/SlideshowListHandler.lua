@@ -10,6 +10,7 @@ local OpenedCurrentEventData = require(script.Parent.OpenedCurrentEventData)
 
 local SlideEditorConnections = {}
 
+-- Sets up the slide ImageButton and editing the slide button connections 
 function module.SetupSlide(SlideNumber: string, SlideImageID: string)
 	local SlideTemplateClone = UIAssets.SlideTemplate:Clone()
 	SlideTemplateClone.Name = SlideNumber
